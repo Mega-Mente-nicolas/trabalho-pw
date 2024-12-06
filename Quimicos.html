@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>DD | Quimicos</title>
+
+    <link rel="stylesheet" href="css/Quimicos.css">
+</head>
+<body>
+  <div class="topnav">
+    <a href="index.html"><img src="imgs/Dexter.png" class="dex"></a>
+
+    <a href="index.html" class="link">Home</a>
+    <a href="TP.html" class="link">Tabela Periódica</a>
+    <a href="Quimicos.html" class="link">Químicos</a>
+    <a href="Terminologias.html" class="link">Terminologias</a>
+    <a href="sobre.html" class="link">Sobre</a>
+  </div>
+
+  <script>
+    const dexter = document.querySelector('.dex');
+    
+    dexter.addEventListener('mouseenter', () => {
+        dexter.style.transform = 'scale(1.1)';
+    });
+
+    dexter.addEventListener('mouseleave', () => {
+        dexter.style.transform = 'scale(1)';
+    });
+  </script>
+
+      <br>
+
+        <center><h1>Químicos</h1></center>
+        <br>
+
+        <div class="search-container">
+          <input type="search" id="searchInput" placeholder="Procure seu Químico..." oninput="search()">
+      </div>
+
+    <br><br>
+      <div class="nao-encontrado" id="nao">
+        Não Encontrado
+      </div>
+
+        <div class="results" id="results">
+      </div>
+
+      <div id="myModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2 id="modalTitle"></h2>
+          <p id="modalContent"></p>
+        </div>
+      </div>
+  
+      <script>
+          document.addEventListener("DOMContentLoaded", () => {
+    const searchData = [
+              { name: 'Dmitri Mendeleev', description: 'Criador da tabela periódica, que organiza os elementos químicos com base em suas propriedades e pesos atômicos.', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/드미트리_멘델레예프.jpg/1200px-드미트리_멘델레예프.jpg', information: 'Criador da tabela periódica, Mendeleev organizou os elementos químicos com base nas propriedades e pesos atômicos, descobrindo que, quando organizados dessa forma, elementos com propriedades semelhantes estavam alinhados em colunas. Ele previu a existência e as propriedades de elementos ainda não descobertos, o que foi confirmado após sua morte, reforçando a precisão de sua tabela.'},
+              { name: 'Marie Curie', description: 'Conhecido por suas pesquisas em química quântica, ligações químicas e vitamina C; recebeu o Prêmio Nobel de Química.', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Marie_Curie_c1920.jpg/640px-Marie_Curie_c1920.jpg', information: 'Pioneira na pesquisa sobre radioatividade, foi a primeira mulher a ganhar um Prêmio Nobel e a primeira pessoa a ganhar dois Prêmios Nobel em áreas diferentes (Física e Química). Ela descobriu os elementos polônio e rádio, e sua pesquisa foi fundamental para o desenvolvimento da radioterapia e outras áreas da medicina. Seu trabalho também contribuiu para a compreensão das transformações atômicas e da estrutura da matéria.' },
+              { name: 'Robert H. Grubbs', description: 'Reconhecido por seu trabalho em reações de metátese e ganhador do Prêmio Nobel de Química.', image: 'https://upload.wikimedia.org/wikipedia/commons/8/87/Robert_Grubbs_Royal_Society.jpg', information: 'Grubbs ganhou o Nobel de Química por seu trabalho em metátese de olefinas, uma reação que permite a formação de novas ligações carbono-carbono. Esse avanço tem aplicações importantes na indústria química, especialmente na síntese de compostos orgânicos complexos, como polímeros e fármacos. Sua pesquisa é considerada uma das maiores inovações na química orgânica.' },
+              { name: 'Gilbert N. Lewis', description: 'Contribuiu com a teoria da ligação covalente e o conceito de pares de elétrons.', image: 'https://upload.wikimedia.org/wikipedia/en/2/21/Gilbert_N_Lewis.jpg', information: 'Lewis foi um dos maiores químicos teóricos do século 20, desenvolvendo a teoria da ligação covalente e o conceito de pares de elétrons. Sua famosa representação da ligação covalente, conhecida como "estruturas de Lewis", é uma ferramenta fundamental para a compreensão das reações químicas e da estabilidade molecular. Ele também formulou a teoria dos ácidos e bases de Lewis, que expande a definição de ácidos e bases além da definição clássica de Brønsted-Lowry.' },
+              { name: 'John Dalton', description: 'Proponente da teoria atômica moderna e estudos sobre a composição de gases.', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Dalton_John_desk.jpg/1200px-Dalton_John_desk.jpg', information: 'Dalton formulou a teoria atômica moderna, que propõe que a matéria é composta por átomos indivisíveis e que os átomos de diferentes elementos têm massas diferentes. Ele também é conhecido por suas contribuições ao estudo dos gases, especialmente a Lei das Pressões Parciais, que é um dos pilares da química dos gases. Seu trabalho ajudou a lançar as bases para a teoria moderna da química.' },
+              { name: 'Linus Pauling', description: 'Premiado com o Nobel de Química por suas descobertas sobre a natureza das ligações químicas e sua aplicação à estrutura dos compostos.', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Pauling.jpg/800px-Pauling.jpg', information: 'Pauling foi um dos maiores químicos do século 20, conhecido por suas contribuições à teoria das ligações químicas, especialmente a teoria da hibridação dos orbitais atômicos e a natureza das ligações covalentes. Ele também desempenhou um papel crucial na compreensão da estrutura da proteína, mais especificamente na estrutura da hemoglobina. Pauling recebeu dois Prêmios Nobel, um em Química por suas pesquisas sobre a ligação química e outro da Paz por seu ativismo contra a proliferação nuclear.' },
+              { name: 'Rosalind Franklin', description: 'Pioneira na descoberta da estrutura do DNA, usando cristalografia de raios-X.', image: 'https://upload.wikimedia.org/wikipedia/pt/9/97/Rosalind_Franklin.jpg', information: 'Franklin foi uma cientista fundamental na descoberta da estrutura do DNA. Utilizando cristalografia de raios-X, ela obteve imagens do DNA que permitiram que Watson e Crick propusessem o modelo de dupla hélice. Embora Franklin não tenha recebido o devido reconhecimento em vida, suas contribuições científicas foram posteriormente amplamente reconhecidas como essenciais para a compreensão da genética.' },
+              { name: 'Marie Maynard Daly', description: 'Primeira mulher afro-americana a obter um Ph.D. em química nos Estados Unidos, contribuindo para a pesquisa sobre o colesterol.', image: 'https://upload.wikimedia.org/wikipedia/commons/1/19/Marie_Maynard_Daly.jpg', information: 'Daly foi a primeira mulher afro-americana a obter um doutorado em química nos Estados Unidos. Ela fez contribuições significativas para a biologia e a química, especialmente na relação entre dieta, colesterol e hipertensão. Sua pesquisa ajudou a entender os efeitos do colesterol na saúde cardiovascular e abriu caminho para o estudo das doenças do coração.' },
+              { name: 'Galileo Galilei', description: 'Embora mais conhecido pela física e astronomia, também fez contribuições para o estudo da química e o método científico.', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Justus_Sustermans_-_Portrait_of_Galileo_Galilei%2C_1636.jpg/800px-Justus_Sustermans_-_Portrait_of_Galileo_Galilei%2C_1636.jpg', information: 'Galileo Galilei, conhecido principalmente por suas descobertas em física e astronomia, também teve impacto na química. Ele contribuiu para a evolução do método científico, conduzindo estudos com gases e substâncias químicas. Suas práticas experimentais ajudaram a estabelecer bases sólidas para o avanço das ciências naturais.' },
+              { name: 'Robert Hooke', description: 'Descobriu a célula e fez contribuições fundamentais para a química e biologia, além de ser um pioneiro no estudo da microscopia.', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/13_Portrait_of_Robert_Hooke.JPG/1200px-13_Portrait_of_Robert_Hooke.JPG', information: 'Hooke foi um dos primeiros cientistas a aplicar o método científico experimental e a usar um microscópio para investigar a estrutura de organismos e substâncias. Ele é famoso pela descoberta das células ao observar uma fatia de cortiça ao microscópio. Além disso, formulou a Lei de Hooke, que descreve o comportamento elástico dos materiais, e contribuiu para o avanço da mecânica e da física.' },
+
+              { name: 'Antoine Lavoisier', description: 'Considerado o pai da química moderna, introduziu a lei da conservação da massa.', image: 'https://upload.wikimedia.org/wikipedia/commons/8/85/David_-_Portrait_of_Monsieur_Lavoisier_%28cropped%29.jpg', information: 'Lavoisier é conhecido como o "pai da química moderna" por suas contribuições à compreensão da natureza da combustão e da teoria da oxidação. Ele foi o responsável por estabelecer a Lei da Conservação da Massa, que afirma que a massa total de uma reação química permanece constante. Suas descobertas mudaram a forma como os cientistas viam a matéria e a reação química, e ele também ajudou a refinar a nomenclatura química.' },
+                { name: 'Ernest Rutherford', description: 'Descobriu o núcleo atômico e é conhecido como o pai da física nuclear.', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Ernest_Rutherford_LOC.jpg/1200px-Ernest_Rutherford_LOC.jpg', information: 'Rutherford é famoso por suas descobertas sobre a estrutura atômica. Ele formulou o modelo nuclear do átomo após conduzir experimentos de dispersão de partículas alfa em uma lâmina de ouro, o que levou à descoberta do núcleo atômico. Rutherford também fez avanços em física nuclear, descobrindo a radiação alfa e beta, e foi fundamental no estudo da transmutação dos elementos.' },
+                { name: 'Alfred Nobel', description: 'Inventor da dinamite e criador do Prêmio Nobel.', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Alfred_Nobel3.jpg/640px-Alfred_Nobel3.jpg', information: 'Nobel é mais conhecido como o inventor da dinamite, mas suas invenções se estenderam a várias áreas da química, física e engenharia. Após sua morte, ele fundou o Prêmio Nobel, que hoje é considerado um dos maiores reconhecimentos em diversas áreas, incluindo Química. A fundação do prêmio foi sua resposta a uma notícia errada que o descreveu como "o mercador da morte", após a invenção da dinamite.' },
+                { name: 'Friedrich Wöhler', description: 'Pioneiro da química orgânica; sintetizou a ureia, desafiando a teoria vitalista.', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Friedrich_Wöhler_Litho.jpg/640px-Friedrich_Wöhler_Litho.jpg', information: 'Wöhler foi um dos fundadores da química orgânica, conhecido por sintetizar a ureia a partir de substâncias inorgânicas, desafiando a teoria vitalista que afirmava que substâncias orgânicas só podiam ser produzidas por seres vivos. Essa síntese foi um marco para a química e abriu o caminho para o estudo de reações químicas em compostos orgânicos.' },
+                { name: 'Henri Becquerel', description: 'Descobriu a radioatividade natural.', image: 'https://upload.wikimedia.org/wikipedia/commons/0/05/Paul_Nadar_-_Henri_Becquerel.jpg', information: 'Becquerel foi o descobridor da radioatividade natural. Ele observou que certos materiais, como o urânio, emitiam radiação espontaneamente, sem necessidade de ser expostos à luz. Sua descoberta foi fundamental para o desenvolvimento da física nuclear e da química, além de ter contribuído para a pesquisa médica sobre radiação.' },
+                { name: 'Niels Bohr', description: 'Desenvolveu o modelo atômico de Bohr e contribuiu para a teoria quântica.', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Niels_Bohr.jpg/640px-Niels_Bohr.jpg', information: 'Bohr é famoso por desenvolver o modelo atômico que explicava a estrutura dos átomos e a natureza da radiação emitida por eles. Seu modelo atômico, baseado em órbitas quantizadas, foi um avanço crucial para a física e a química e levou à compreensão das propriedades dos átomos e das moléculas. Ele também trabalhou no desenvolvimento da mecânica quântica e na física nuclear.' },
+                { name: 'Ahmed Zewail', description: 'Ganhou o Nobel de Química por sua pesquisa em femtoquímica.', image: 'https://upload.wikimedia.org/wikipedia/commons/5/50/Ahmed_Zewail.jpg', information: 'Zewail foi o pioneiro na área da femtoquímica, estudando as reações químicas em escalas de tempo muito curtas (femtossegundos). Ele recebeu o Prêmio Nobel de Química por suas contribuições, que ajudaram a entender a dinâmica molecular em nível atômico e a avançar nas tecnologias de diagnóstico e imagem médica.' },
+                { name: 'Dorothy Hodgkin', description: 'Descobriu a estrutura da penicilina e da vitamina B12, ganhando o Nobel de Química.', image: 'https://upload.wikimedia.org/wikipedia/commons/6/69/Dorothy_Hodgkin_im_Talar.jpg', information: 'Hodgkin fez grandes avanços na cristalografia de raios-X e foi responsável pela determinação da estrutura da penicilina e da vitamina B12. Seu trabalho permitiu entender melhor como essas substâncias funcionam em nível molecular, o que teve grandes implicações para a medicina e a farmacologia.' },
+                { name: 'Jacobus Henricus van \'t Hoff', description: 'Ganhou o primeiro Nobel de Química por seu trabalho em termodinâmica química.', image: 'https://upload.wikimedia.org/wikipedia/commons/a/a4/Vant_Hoff.jpg', information: 'Van \'t Hoff foi um dos fundadores da física química moderna e fez contribuições importantes para a termodinâmica e para a teoria das soluções. Ele também desenvolveu as leis da osmose e a relação entre temperatura, volume e pressão dos gases, sendo o primeiro laureado com o Prêmio Nobel de Química.' },
+                { name: 'Robert Boyle', description: 'Autor da lei de Boyle, considerado um dos fundadores da química moderna.', image: 'https://upload.wikimedia.org/wikipedia/commons/b/b3/Robert_Boyle_0001.jpg', information: 'Boyle é considerado um dos pais da química moderna por sua descoberta da Lei de Boyle, que descreve a relação entre pressão e volume dos gases. Ele também foi um defensor do método experimental e do pensamento científico rigoroso, ajudando a estabelecer os princípios fundamentais da química e da física.' }
+    ];
+
+
+    const searchInput = document.getElementById("searchInput");
+      const resultsContainer = document.getElementById("results");
+      const naoEncontrado = document.getElementById("nao");
+      const modal = document.getElementById("myModal");
+      const modalTitle = document.getElementById("modalTitle");
+      const modalContent = document.getElementById("modalContent");
+      const closeModal = document.querySelector(".close");
+
+      function renderResults(data) {
+        resultsContainer.innerHTML = "";
+        if (data.length > 0) {
+          naoEncontrado.style.display = "none";
+          data.forEach(item => {
+            const card = document.createElement("div");
+            card.classList.add("card");
+
+            const img = document.createElement("img");
+            img.src = item.image;
+            img.classList.add("card-img-top");
+
+            const cardBody = document.createElement("div");
+            cardBody.classList.add("card-body");
+
+            const title = document.createElement("h5");
+            title.classList.add("card-title");
+            title.textContent = item.name;
+
+            const text = document.createElement("p");
+            text.classList.add("card-text");
+            text.textContent = item.description;
+
+            const button = document.createElement("button");
+            button.classList.add("btn", "btn-success");
+            button.textContent = "Saiba Mais";
+            button.addEventListener("click", () => openModal(item));
+
+            cardBody.appendChild(title);
+            cardBody.appendChild(text);
+            cardBody.appendChild(button);
+            card.appendChild(img);
+            card.appendChild(cardBody);
+
+            resultsContainer.appendChild(card);
+          });
+        } else {
+          naoEncontrado.style.display = "flex";
+        }
+      }
+
+      // Função de busca
+      function search() {
+        const query = searchInput.value.toLowerCase();
+        const filteredData = searchData.filter(item =>
+          item.name.toLowerCase().includes(query)
+        );
+        renderResults(filteredData);
+      }
+
+      function openModal(item) {
+        modalTitle.textContent = item.name;
+        modalContent.innerHTML = `
+          <p>${item.information}</p>
+          <center>
+          <img src="${item.image}"class="img-fluid">
+          </center>
+        `;
+        modal.style.display = "flex"; // Exibe o modal
+      }
+
+      // Fecha o modal
+      function closeModalFunction() {
+        modal.style.display = "none";
+      }
+
+      window.addEventListener("click", (event) => {
+        if (event.target === modal) {
+          closeModalFunction();
+        }
+      });
+
+      closeModal.addEventListener("click", closeModalFunction);
+      searchInput.addEventListener("input", search);
+
+      renderResults(searchData);
+    });
+      </script>
+
+    <footer>
+        <img src="https://bkpsitecpsnew.blob.core.windows.net/uploadsitecps/sites/1/2022/10/centro-paula-souza-logo.svg" class="fimg">
+        <img src="imgs/EtC.png" class="fimg" style="width: 200px;">
+    </footer>
+</body>
+</html>

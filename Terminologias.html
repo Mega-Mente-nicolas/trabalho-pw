@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>DD | Terminologias</title>
+
+    <link rel="stylesheet" href="css/Terminologias.css">
+</head>
+<body>
+  <div class="topnav">
+    <a href="index.html"><img src="imgs/Dexter.png" class="dex"></a>
+
+    <a href="index.html" class="link">Home</a>
+    <a href="TP.html" class="link">Tabela Periódica</a>
+    <a href="Quimicos.html" class="link">Químicos</a>
+    <a href="Terminologias.html" class="link">Terminologias</a>
+    <a href="sobre.html" class="link">Sobre</a>
+  </div>
+
+  <script>
+    const dexter = document.querySelector('.dex');
+    
+    dexter.addEventListener('mouseenter', () => {
+        dexter.style.transform = 'scale(1.1)';
+    });
+
+    dexter.addEventListener('mouseleave', () => {
+        dexter.style.transform = 'scale(1)';
+    });
+  </script>
+
+      <br>
+
+        <center><h1>Terminologias</h1></center>
+        <br>
+
+        <div class="search-container">
+          <input type="search" id="searchInput" placeholder="Procure sua terminologia..." oninput="search()">
+      </div>
+
+    <br><br>
+      <div class="nao-encontrado" id="nao">
+        Não Encontrado
+      </div>
+
+        <div class="results" id="results">
+      </div>
+  
+      <script>
+          const searchData = [
+          { "name": "Absorbância", "description": "Medida da quantidade de luz que é absorvida por uma substância quando a luz passa por ela.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Absorbance.svg/1024px-Absorbance.svg.png" },
+          { "name": "Absorção", "description": "Processo em que uma substância é incorporada por outra, como no caso de líquidos sendo absorvidos por sólidos ou gases.", "image": "https://upload.wikimedia.org/wikipedia/commons/2/27/Absorption_Spectrum.svg" },
+          { "name": "Ácidos", "description": "Substâncias que liberam íons de hidrogênio (H+) em solução aquosa e possuem pH abaixo de 7.", "image": "https://upload.wikimedia.org/wikipedia/commons/7/74/Acid-base.svg" },
+          { "name": "Alcadienos", "description": "Hidrocarbonetos insaturados com duas ligações duplas entre átomos de carbono em sua estrutura.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Alkene_structure.svg/600px-Alkene_structure.svg.png" },
+          { "name": "Alcalimetria", "description": "Método de análise quantitativa que envolve a titulação de ácidos com uma solução de base.", "image": "https://upload.wikimedia.org/wikipedia/commons/9/92/Acid-base-titration.svg" },
+          { "name": "Alcalinidade", "description": "Capacidade de uma solução absorver íons de hidrogênio, normalmente associada a soluções básicas ou alcalinas.", "image": "https://upload.wikimedia.org/wikipedia/commons/3/31/Alkaline_water.jpg" },
+          { "name": "Alcanos", "description": "Hidrocarbonetos saturados, ou seja, compostos orgânicos formados apenas por átomos de carbono e hidrogênio ligados por ligações simples.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Alkane_general_structure.svg/400px-Alkane_general_structure.svg.png" },
+          { "name": "Alcenos", "description": "Hidrocarbonetos insaturados que possuem pelo menos uma ligação dupla entre átomos de carbono.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Alkene_structure.svg/600px-Alkene_structure.svg.png" },
+          { "name": "Alcinos", "description": "Hidrocarbonetos insaturados com pelo menos uma ligação tripla entre átomos de carbono.", "image": "https://upload.wikimedia.org/wikipedia/commons/0/0f/Alkyne_general_structure.svg" },
+          { "name": "Aldeído", "description": "Composto orgânico caracterizado por um grupo funcional -CHO, onde o carbono está ligado a um átomo de hidrogênio e a um grupo oxigenado.", "image": "https://upload.wikimedia.org/wikipedia/commons/7/75/Acetaldehyde_structure.png" },
+          { "name": "Aldoxila", "description": "Substância contendo o grupo funcional -CHO (aldeído) e um grupo hidroxila (-OH) ligados ao carbono.", "image": "https://upload.wikimedia.org/wikipedia/commons/5/58/Alpha-hydroxyaldehyde.png" },
+          { "name": "Amônia", "description": "Composto químico composto por átomos de nitrogênio e hidrogênio (NH3), muito utilizado na indústria e agricultura.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/NH3-structure.png/1200px-NH3-structure.png" },
+          { "name": "Antibioticoterapia", "description": "Tratamento com antibióticos para combater infecções bacterianas.", "image": "https://upload.wikimedia.org/wikipedia/commons/4/4c/Antibiotics.jpg" },
+          { "name": "Aquecimento", "description": "Processo de aumento da temperatura de um sistema ou substância, muitas vezes utilizado para acelerar reações químicas.", "image": "https://upload.wikimedia.org/wikipedia/commons/d/d8/Heating_in_laboratory.jpg" },
+          { "name": "Areômetro", "description": "Instrumento utilizado para medir a densidade relativa de líquidos, geralmente em soluções aquosas.", "image": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Ar%C3%B4metro.jpg" },
+          { "name": "Átomo", "description": "Unidade básica da matéria, composta por um núcleo (prótons e nêutrons) e uma nuvem de elétrons ao seu redor.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Atom_model.svg/250px-Atom_model.svg.png" },
+          { "name": "Átomo-grama", "description": "Representação gráfica ou representação visual de um átomo, mostrando a distribuição de seus elétrons.", "image": "https://upload.wikimedia.org/wikipedia/commons/2/27/Atomic_diagram.png" },
+          { "name": "Autoionização", "description": "Fenômeno em que uma substância se ioniza espontaneamente em solução, como a água, que se divide em íons H+ e OH-.", "image": "https://upload.wikimedia.org/wikipedia/commons/2/2f/Autoionization_of_water.png" },
+          { "name": "Balança", "description": "Instrumento utilizado para medir a massa de um objeto ou substância.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Analytical_balance_1.jpg/1200px-Analytical_balance_1.jpg" },
+          { "name": "Bário", "description": "Elemento químico metálico (Ba), usado em diversas aplicações industriais, como em raios-X e fabricação de fogos de artifício.", "image": "https://upload.wikimedia.org/wikipedia/commons/9/94/Barium_atom_structure.svg" },
+          { "name": "Baumé", "description": "Escala de densidade usada para medir líquidos, frequentemente usada na indústria química e farmacêutica.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Baume_scale_for_sugar_solution.svg/200px-Baume_scale_for_sugar_solution.svg.png" },
+          { "name": "Béquer", "description": "Recipiente cilíndrico com bico, usado principalmente para medir e aquecer líquidos em laboratórios.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Beaker_250ml.svg/1200px-Beaker_250ml.svg.png" },
+          { "name": "Bicarbonatos", "description": "Compostos químicos contendo o ânion bicarbonato (HCO3-), usados frequentemente como antiácidos e em processos industriais.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Sodium_bicarbonate_3D_ball_and_stick.png/400px-Sodium_bicarbonate_3D_ball_and_stick.png" },
+          { "name": "Boro", "description": "Elemento químico não metálico (B), usado em ligas metálicas e em aplicações como fibras de vidro e semiconductores.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Boron_lattice.jpg/800px-Boron_lattice.jpg" },
+          { "name": "Brix", "description": "Escala usada para medir a concentração de açúcares dissolvidos em líquidos, como sucos e vinhos.", "image": "https://upload.wikimedia.org/wikipedia/commons/9/9d/Brix_scale.png" },
+
+          { "name": "Bromato", "description": "Composto químico contendo o ânion bromato (BrO3-), utilizado em alguns processos industriais, como desinfetante e na fabricação de produtos químicos.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Bromate_structure.png/400px-Bromate_structure.png" },
+          { "name": "Brometo", "description": "Sal ou composto formado pela reação de um elemento com o bromo, geralmente encontrado em processos de halogenação.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Bromide_structure.svg/400px-Bromide_structure.svg.png" },
+          { "name": "Bureta", "description": "Instrumento de medição de volume preciso, utilizado principalmente em titulações volumétricas em laboratórios químicos.", "image": "https://upload.wikimedia.org/wikipedia/commons/6/68/Burette.jpg" },
+          { "name": "Butanamida", "description": "Composto orgânico derivado do butano, contendo um grupo amida (-CONH2), utilizado em diversas reações químicas e na indústria de plásticos.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Butanamida.png/600px-Butanamida.png" },
+          { "name": "Cadeia", "description": "Sequência de átomos ligados entre si, geralmente referindo-se a moléculas orgânicas compostas por cadeias de carbono, como os hidrocarbonetos.", "image": "https://upload.wikimedia.org/wikipedia/commons/4/4d/Carbon_chain.svg" },
+          { "name": "Cadinhos", "description": "Recipientes pequenos e resistentes ao calor, utilizados em laboratórios para aquecer ou fundir substâncias.", "image": "https://upload.wikimedia.org/wikipedia/commons/6/64/Cadinho.jpg" },
+          { "name": "Calcinação", "description": "Processo térmico utilizado para aquecer substâncias a altas temperaturas, geralmente para decompor ou remover componentes voláteis.", "image": "https://upload.wikimedia.org/wikipedia/commons/4/48/Calcination.svg" },
+          { "name": "Cálcio", "description": "Elemento químico metálico (Ca), essencial para a formação de ossos e dentes, e utilizado em várias reações químicas e industriais.", "image": "https://upload.wikimedia.org/wikipedia/commons/5/5b/Calcium_structure.png" },
+          { "name": "Carbonatos", "description": "Compostos químicos contendo o ânion carbonato (CO3 2-), frequentemente encontrados em rochas e usados em diversas indústrias, como a produção de vidro.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Calcium_carbonate_3d.png/400px-Calcium_carbonate_3d.png" },
+          { "name": "Carbonila", "description": "Grupo funcional composto por um átomo de carbono ligado a um átomo de oxigênio por uma ligação dupla, comum em cetonas e aldeídos.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Carbonyl_group_structure.png/400px-Carbonyl_group_structure.png" },
+          { "name": "Carbono", "description": "Elemento químico não metálico (C), fundamental para a vida e base de todas as moléculas orgânicas, como proteínas e ácidos nucleicos.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Carbon_atom_3d_model.svg/800px-Carbon_atom_3d_model.svg.png" },
+          { "name": "Catalisador", "description": "Substância que acelera uma reação química sem ser consumida, alterando a velocidade da reação de forma significativa.", "image": "https://upload.wikimedia.org/wikipedia/commons/a/ab/Catalysis.jpg" },
+          { "name": "Cetona", "description": "Composto orgânico que contém um grupo carbonila (C=O) ligado a dois grupos alquila ou arila, muito utilizada como solvente.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Acetone-3D-balls.png/600px-Acetone-3D-balls.png" },
+          { "name": "Chumbo", "description": "Elemento químico metálico (Pb), denso e tóxico, usado em baterias e em proteção contra radiação.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Lead-crystal.jpg/1200px-Lead-crystal.jpg" },
+          { "name": "Clorofórmio", "description": "Composto químico (CHCl3) utilizado como solvente, anestésico em procedimentos médicos e em experimentos de laboratório.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Chloroform_2D_structure.svg/400px-Chloroform_2D_structure.svg.png" },
+          { "name": "Combustíveis", "description": "Substâncias que liberam energia térmica quando reagem com o oxigênio, como gasolina, carvão e gás natural.", "image": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Combustion_of_a_fuel.png" },
+          { "name": "Componente", "description": "Parte ou elemento que faz parte de um sistema ou conjunto, podendo ser físico ou químico, e influenciar seu funcionamento.", "image": "https://upload.wikimedia.org/wikipedia/commons/7/76/Component_diagram.svg" },
+          { "name": "Composto", "description": "Substância formada pela combinação de dois ou mais elementos químicos em proporções fixas, como a água (H2O).", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Molecular_model_of_water.svg/600px-Molecular_model_of_water.svg.png" },
+          { "name": "Comprimento", "description": "Medida linear que descreve a distância de um ponto a outro, essencial em várias áreas da ciência e engenharia.", "image": "https://upload.wikimedia.org/wikipedia/commons/3/36/Length.svg" },
+          { "name": "Concentração", "description": "Quantificação da quantidade de soluto em uma solução, expressa por volume, massa ou molaridade.", "image": "https://upload.wikimedia.org/wikipedia/commons/a/a9/Concentration.svg" },
+          { "name": "Condutibilidade", "description": "Propriedade física que descreve a capacidade de um material de conduzir eletricidade ou calor.", "image": "https://upload.wikimedia.org/wikipedia/commons/4/4c/Resistivity-temperature-diagram.svg" },
+          { "name": "Condutivímetro", "description": "Instrumento utilizado para medir a condutividade elétrica de uma solução, frequentemente usado para avaliar a salinidade.", "image": "https://upload.wikimedia.org/wikipedia/commons/6/63/Conductivity_meter.png" },
+          { "name": "Corrosão", "description": "Processo químico ou eletroquímico que degrada materiais, geralmente metais, pela ação de substâncias como água e oxigênio.", "image": "https://upload.wikimedia.org/wikipedia/commons/f/f4/Corrosion_test.JPG" },
+          { "name": "Cristalização", "description": "Processo de formação de cristais a partir de uma solução ou fusão, usado para purificar substâncias.", "image": "https://upload.wikimedia.org/wikipedia/commons/3/31/Crystallization_in_chemistry.jpg" },
+          { "name": "Cromatografia", "description": "Método de separação de misturas, utilizado em química para separar compostos com base em suas diferentes taxas de migração.", "image": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Chromatography.png" },
+
+          { "name": "Crômio", "description": "Elemento químico metálico (Cr), utilizado em ligas metálicas e como revestimento para prevenir a corrosão.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Chromium_in_periodic_table.png/400px-Chromium_in_periodic_table.png" },
+          { "name": "Cubeta", "description": "Recipiente pequeno utilizado em laboratórios para realizar medições ou experimentos, especialmente em espectrofotometria.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Cuvette.jpg/400px-Cuvette.jpg" },
+          { "name": "Cultura", "description": "Conjunto de microrganismos ou células cultivados em condições controladas em laboratório para estudo ou produção.", "image": "https://upload.wikimedia.org/wikipedia/commons/9/92/Culture_Dish.jpg" },
+          { "name": "Decantação", "description": "Processo físico de separação de substâncias de densidades diferentes, como sólidos e líquidos, baseado na gravidade.", "image": "https://upload.wikimedia.org/wikipedia/commons/7/7d/Decantation.jpg" },
+          { "name": "Densidade", "description": "Propriedade física que expressa a relação entre a massa e o volume de uma substância.", "image": "https://upload.wikimedia.org/wikipedia/commons/1/1d/Density_example.png" },
+          { "name": "Densímetro", "description": "Instrumento utilizado para medir a densidade de líquidos e sólidos, frequentemente usado em laboratórios de física e química.", "image": "https://upload.wikimedia.org/wikipedia/commons/4/44/Densimeter.png" },
+          { "name": "Dessecador", "description": "Equipamento utilizado para manter substâncias secas, comumente utilizado após processos de secagem em laboratório.", "image": "https://upload.wikimedia.org/wikipedia/commons/3/3b/Desiccator.jpg" },
+          { "name": "Destilação", "description": "Processo de separação de misturas com base nos diferentes pontos de ebulição dos componentes, usado para purificação de líquidos.", "image": "https://upload.wikimedia.org/wikipedia/commons/7/7c/Distillation_setup.jpg" },
+          { "name": "Determinação", "description": "Processo de medir ou calcular o valor de uma propriedade ou característica de uma substância ou solução.", "image": "https://upload.wikimedia.org/wikipedia/commons/6/66/Measurement.png" },
+          { "name": "Digestor", "description": "Equipamento utilizado em laboratório para aquecer substâncias a altas temperaturas de maneira controlada, comumente usado em digestões químicas.", "image": "https://upload.wikimedia.org/wikipedia/commons/c/cc/Digestor_Laboratorio.jpg" },
+          { "name": "Diluição", "description": "Processo de reduzir a concentração de uma substância em uma solução, geralmente adicionando mais solvente.", "image": "https://upload.wikimedia.org/wikipedia/commons/0/02/Serial_dilution.jpg" },
+          { "name": "Ebulição", "description": "Processo físico no qual um líquido se transforma em vapor devido ao aumento da temperatura, atingindo seu ponto de ebulição.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Boiling_water.png/400px-Boiling_water.png" },
+          { "name": "Elemento", "description": "Substância pura composta por átomos do mesmo tipo, não podendo ser decomposta em substâncias mais simples por reações químicas.", "image": "https://upload.wikimedia.org/wikipedia/commons/5/5d/Periodic_table_with_names.svg" },
+          { "name": "Eletrodo", "description": "Condutor elétrico utilizado para entrar em contato com uma solução eletrolítica e permitir a passagem de corrente elétrica.", "image": "https://upload.wikimedia.org/wikipedia/commons/7/75/Electrode_in_cell.jpg" },
+          { "name": "Eletrodo", "description": "Condutor usado em experimentos eletroquímicos, geralmente para realizar reações de oxidação ou redução.", "image": "https://upload.wikimedia.org/wikipedia/commons/6/69/Electrode.jpg" },
+          { "name": "Eletrosfera", "description": "Região ao redor do núcleo de um átomo onde os elétrons estão presentes, com distribuições específicas em camadas.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Electrons_and_their_orbitals_in_atom.svg/400px-Electrons_and_their_orbitals_in_atom.svg.png" },
+          { "name": "Entalpia", "description": "Grandeza termodinâmica que representa a quantidade total de energia em um sistema, incluindo calor e trabalho.", "image": "https://upload.wikimedia.org/wikipedia/commons/0/06/Enthalpy.jpg" },
+          { "name": "Entropia", "description": "Medida da desordem ou aleatoriedade de um sistema, refletindo o grau de irreversibilidade de um processo.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Entropy_of_system.png/400px-Entropy_of_system.png" },
+          { "name": "Equilíbrio", "description": "Estado de um sistema no qual as forças ou reações que ocorrem são balanceadas, sem mudanças netas ao longo do tempo.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Equilibrium_process.svg/400px-Equilibrium_process.svg.png" },
+          { "name": "Eritrosina", "description": "Corante sintético utilizado em diversas indústrias, especialmente em alimentos, como corante vermelho.", "image": "https://upload.wikimedia.org/wikipedia/commons/9/95/Erythrosine.svg" },
+          { "name": "Erlenmeyer", "description": "Frasco de vidro com fundo cônico e estreitamento no pescoço, utilizado em laboratórios para agitar ou aquecer substâncias.", "image": "https://upload.wikimedia.org/wikipedia/commons/4/42/Erlenmeyer.jpg" },
+          { "name": "Escoamento", "description": "Movimento de fluidos, seja líquido ou gás, através de um conduto ou superfície, sujeito a diversas leis físicas, como a viscosidade.", "image": "https://upload.wikimedia.org/wikipedia/commons/a/a3/Flow_rate_schematic.svg" },
+          { "name": "Esfregaço", "description": "Preparo de uma lâmina com uma amostra biológica ou química para análise ao microscópio, como esfregaço de sangue.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Blood_smear.jpg/400px-Blood_smear.jpg" },
+
+          { "name": "Espectrofotômetro", "description": "Instrumento utilizado para medir a intensidade da luz em diferentes comprimentos de onda, utilizado em análises quantitativas e qualitativas.", "image": "https://upload.wikimedia.org/wikipedia/commons/6/65/Spectrophotometer.jpg" },
+          { "name": "Éster", "description": "Composto químico resultante da reação entre um ácido e um álcool, geralmente com um cheiro característico, utilizado em fragrâncias e solventes.", "image": "https://upload.wikimedia.org/wikipedia/commons/0/0d/Ester_structure.svg" },
+          { "name": "Estrôncio", "description": "Elemento químico metálico (Sr) utilizado em fogos de artifício, além de ser importante na produção de imãs.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Strontium_in_periodic_table.png/400px-Strontium_in_periodic_table.png" },
+          { "name": "Estufa", "description": "Equipamento utilizado em laboratórios para aquecer ou secar substâncias de maneira controlada, com temperatura e umidade ajustáveis.", "image": "https://upload.wikimedia.org/wikipedia/commons/7/7b/Laboratory_oven.jpg" },
+          { "name": "Etanol", "description": "Álcool etílico (C2H5OH), utilizado como solvente, combustível e em bebidas alcoólicas, além de ser importante em processos industriais.", "image": "https://upload.wikimedia.org/wikipedia/commons/2/23/Ethanol_chemical_structure.png" },
+          { "name": "Éter", "description": "Composto orgânico caracterizado pela presença de um átomo de oxigênio ligado a dois grupos alquila ou arila, utilizado como solvente e anestésico.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Ether-structure.svg/400px-Ether-structure.svg.png" },
+          { "name": "Éter-anidro", "description": "Versão do éter sem água, utilizado como solvente para reações químicas que não podem ter presença de umidade.", "image": "https://upload.wikimedia.org/wikipedia/commons/5/59/Anhydrous_ether.svg" },
+          { "name": "Etileno-glicol", "description": "Composto utilizado como anticongelante e fluido para sistemas de ar condicionado, além de ser um intermediário na produção de polímeros.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Ethylene_Glycol_Structure.svg/400px-Ethylene_Glycol_Structure.svg.png" },
+          { "name": "Extração", "description": "Processo de separação de substâncias de uma mistura, comumente utilizando solventes para isolar componentes específicos.", "image": "https://upload.wikimedia.org/wikipedia/commons/d/d5/Extraction_Solvent.png" },
+          { "name": "Fenóis", "description": "Compostos orgânicos contendo um grupo hidroxila (-OH) ligado a um anel benzênico, utilizados em desinfetantes e preservantes.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Phenol_structure.svg/400px-Phenol_structure.svg.png" },
+          { "name": "Fenolftaleína", "description": "Indicador ácido-base utilizado em titulações, que muda de cor de incolor para rosa em meio alcalino.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Phenolphthalein.svg/400px-Phenolphthalein.svg.png" },
+          { "name": "Filtração", "description": "Processo de separação de sólidos de líquidos ou gases através de um material poroso, como papel filtro.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Filtration_lab.jpg/400px-Filtration_lab.jpg" },
+          { "name": "Flotação", "description": "Processo de separação de partículas sólidas em líquidos, baseado na diferença de densidade, comumente usado na mineração.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Froth_flotation.jpg/400px-Froth_flotation.jpg" },
+          { "name": "Fluoreto", "description": "Composto químico contendo o íon fluoreto (F-) ligado a outro elemento, comumente utilizado em dentifrícios e como agente de controle de corrosão.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Sodium_fluoride.png/400px-Sodium_fluoride.png" },
+          { "name": "Formila", "description": "Representação simbólica que expressa a composição de uma substância química, indicando os elementos presentes e suas quantidades.", "image": "https://upload.wikimedia.org/wikipedia/commons/a/a7/Water_structure.png" },
+          { "name": "Fórmula", "description": "Símbolo ou combinação de símbolos químicos que representam a composição molecular de uma substância.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Formula_chemistry.png/400px-Formula_chemistry.png" },
+          { "name": "Gás", "description": "Estado físico da matéria onde as partículas estão distantes e em movimento rápido, podendo se expandir para preencher qualquer volume disponível.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Gas_Molecule_Example.gif/400px-Gas_Molecule_Example.gif" },
+          { "name": "Gás", "description": "Fase da matéria que se caracteriza pela ausência de forma e volume fixos, ocupando o espaço disponível.", "image": "https://upload.wikimedia.org/wikipedia/commons/0/06/Gas_particles.gif" },
+          { "name": "Heteroátomos", "description": "Átomos de elementos químicos diferentes do carbono que podem ser encontrados em moléculas orgânicas, como oxigênio, nitrogênio e enxofre.", "image": "https://upload.wikimedia.org/wikipedia/commons/0/09/Heteroatom_structure.svg" },
+          { "name": "Hidrocarbonetos", "description": "Compostos químicos formados exclusivamente por carbono e hidrogênio, como os alcenos, alcinos e alcanos.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Hydrocarbon_structure.png/400px-Hydrocarbon_structure.png" },
+          { "name": "Hidrocarbonetos", "description": "Compostos formados apenas por átomos de carbono e hidrogênio, presentes em combustíveis e outros produtos orgânicos.", "image": "https://upload.wikimedia.org/wikipedia/commons/4/4a/Hydrocarbon_structure.png" },
+          { "name": "Hidroxi-benzeno", "description": "Composto orgânico conhecido como fenol, composto por um grupo hidroxila (-OH) ligado a um anel benzênico.", "image": "https://upload.wikimedia.org/wikipedia/commons/5/58/Phenol_structure.svg" },
+          { "name": "Hidróxidos", "description": "Compostos que contêm o íon hidróxido (OH-) ligado a um metal ou elemento, frequentemente usados em reações de neutralização.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Sodium_hydroxide_structure.svg/400px-Sodium_hydroxide_structure.svg.png" },
+
+          { "name": "Hidroxila", "description": "Grupo funcional (-OH) composto por um átomo de oxigênio ligado a um átomo de hidrogênio, encontrado em álcoois e outros compostos.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Hydroxy_group.svg/400px-Hydroxy_group.svg.png" },
+          { "name": "Homogeneização", "description": "Processo de mistura de substâncias de forma a tornar uma mistura homogênea, com partículas distribuídas de maneira uniforme.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Homogenization_in_laboratory.jpg/400px-Homogenization_in_laboratory.jpg" },
+          { "name": "Indicador-tampão", "description": "Substância que mantém o pH de uma solução constante, mesmo quando pequenas quantidades de ácido ou base são adicionadas.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Buffer_solution.svg/400px-Buffer_solution.svg.png" },
+          { "name": "Inflamabilidade", "description": "Propriedade de uma substância de pegar fogo ou se inflamar facilmente quando exposta a uma fonte de calor ou chama.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Flammable_Sign.svg/400px-Flammable_Sign.svg.png" },
+          { "name": "Inibição", "description": "Processo em que uma substância diminui ou impede a ação de uma reação química ou de um organismo.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Enzyme_inhibition.png/400px-Enzyme_inhibition.png" },
+          { "name": "Iodeto", "description": "Composto químico que contém o íon iodeto (I-), utilizado em diversas aplicações, como desinfetantes e reações químicas.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Iodide_ion.svg/400px-Iodide_ion.svg.png" },
+          { "name": "Iodimetria", "description": "Método de análise volumétrica que utiliza soluções de iodo para determinar a concentração de substâncias em uma amostra.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Iodimetry_titration.svg/400px-Iodimetry_titration.svg.png" },
+          { "name": "Íon", "description": "Átomo ou molécula que ganhou ou perdeu elétrons, adquirindo carga elétrica positiva (cátion) ou negativa (ânion).", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Ionization_in_solution.svg/400px-Ionization_in_solution.svg.png" },
+          { "name": "Ionização", "description": "Processo pelo qual um átomo ou molécula perde ou ganha elétrons, formando íons positivos ou negativos.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Ionization.svg/400px-Ionization.svg.png" },
+          { "name": "Isomeria", "description": "Fenômeno químico em que substâncias com a mesma fórmula molecular possuem diferentes disposições estruturais ou espaciais.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Isomerism.png/400px-Isomerism.png" },
+          { "name": "Isômeros", "description": "Substâncias que possuem a mesma fórmula molecular, mas estruturas ou arranjos diferentes de átomos.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Isomerism_example.png/400px-Isomerism_example.png" },
+          { "name": "Isopropílico", "description": "Álcool com dois grupos metila ligados a um átomo de carbono, utilizado como solvente e desinfetante.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Isopropyl_alcohol_structure.svg/400px-Isopropyl_alcohol_structure.svg.png" },
+          { "name": "Lavagem", "description": "Processo de remoção de impurezas ou substâncias indesejadas de uma amostra, frequentemente usando solventes.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Laboratory_washing.png/400px-Laboratory_washing.png" },
+          { "name": "Legibilidade", "description": "Facilidade com que uma fórmula química ou uma equação é compreendida, em termos de clareza e simplicidade.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Clarity_icon.svg/400px-Clarity_icon.svg.png" },
+          { "name": "Ligação", "description": "Força que mantém os átomos unidos em uma molécula ou composto, como ligações covalentes ou iônicas.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Covalent_bond.svg/400px-Covalent_bond.svg.png" },
+          { "name": "Ligação", "description": "Interação entre átomos ou moléculas que resulta em uma substância estável, como em ligações iônicas, covalentes ou metálicas.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Ionic_bond.svg/400px-Ionic_bond.svg.png" },
+          { "name": "Liquefação", "description": "Processo no qual uma substância passa do estado gasoso para o estado líquido, geralmente através do aumento de pressão ou diminuição de temperatura.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Liquefaction_of_air.svg/400px-Liquefaction_of_air.svg.png" },
+          { "name": "Líquido", "description": "Estado físico da matéria que tem volume fixo, mas forma variável, fluindo facilmente e com moléculas mais próximas do que no estado gasoso.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Liquid.svg/400px-Liquid.svg.png" },
+          { "name": "Magnésio", "description": "Elemento metálico (Mg) utilizado em ligas, na produção de refratários e em suplementos alimentares.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Magnesium_in_periodic_table.png/400px-Magnesium_in_periodic_table.png" },
+          { "name": "Massa", "description": "Quantidade de matéria de um corpo, frequentemente medida em gramas ou quilos, que também define sua inércia em relação ao movimento.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Mass_illustration.png/400px-Mass_illustration.png" },
+          { "name": "Metilorange", "description": "Indicador ácido-base que muda de cor do vermelho para amarelo conforme o pH de uma solução se altera.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Methyl_orange_structure.svg/400px-Methyl_orange_structure.svg.png" },
+          { "name": "Mistura", "description": "Composição de duas ou mais substâncias em que cada componente mantém suas propriedades individuais, podendo ser homogênea ou heterogênea.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Mixture.jpg/400px-Mixture.jpg" },
+          { "name": "Mol", "description": "Unidade de medida usada em química para representar a quantidade de substância, equivalente a 6,022 x 10²³ entidades elementares.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Mole.svg/400px-Mole.svg.png" },
+          { "name": "Molaridade", "description": "Concentração de uma solução, definida como o número de mols de soluto por litro de solução.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Molarity_mole_equation.svg/400px-Molarity_mole_equation.svg.png" },
+          { "name": "Molécula", "description": "Unidade mais simples de uma substância, composta por átomos unidos por ligações químicas, que pode ser de um único elemento ou composto.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Molecular_structure.svg/400px-Molecular_structure.svg.png" },
+
+          { "name": "Mufla", "description": "Equipamento utilizado em laboratórios para realizar aquecimentos em altas temperaturas, frequentemente para calcinação ou fusão de amostras.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Muffle_furnace.jpg/400px-Muffle_furnace.jpg" },
+          { "name": "Neutralização", "description": "Reação química entre um ácido e uma base, resultando na formação de água e sal, geralmente com a liberação de calor.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Neutralization.svg/400px-Neutralization.svg.png" },
+          { "name": "Nêutrons", "description": "Partículas subatômicas sem carga elétrica, encontradas no núcleo dos átomos, junto com os prótons.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Neutron.png/400px-Neutron.png" },
+          { "name": "Nitrilo", "description": "Grupo funcional caracterizado por um átomo de carbono triplicamente ligado a um átomo de nitrogênio, encontrado em compostos como cianetos.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Nitrile_chemical_structure.svg/400px-Nitrile_chemical_structure.svg.png" },
+          { "name": "Nitrilo", "description": "Composto contendo o grupo -C≡N, em que o carbono está triplicemente ligado ao nitrogênio, frequentemente encontrado em cianetos.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Nitrile_chemical_structure.svg/400px-Nitrile_chemical_structure.svg.png" },
+          { "name": "Oxalatos", "description": "Sais ou ésteres do ácido oxálico, frequentemente usados em laboratórios para precipitação ou como reagentes.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Oxalate_chemical_structure.svg/400px-Oxalate_chemical_structure.svg.png" },
+          { "name": "Oxidação", "description": "Processo químico no qual um átomo ou molécula perde elétrons, frequentemente acompanhado pela adição de oxigênio.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Oxidation_reaction.svg/400px-Oxidation_reaction.svg.png" },
+          { "name": "Pesafiltro", "description": "Equipamento utilizado para pesar o material filtrado após uma filtração, garantindo medições precisas de substâncias.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Weighing_bottle.jpg/400px-Weighing_bottle.jpg" },
+          { "name": "Pipeta", "description": "Instrumento de laboratório utilizado para medir e transferir volumes precisos de líquidos.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Pipette.png/400px-Pipette.png" },
+          { "name": "Polarimetria", "description": "Técnica analítica usada para medir a rotação da luz polarizada, indicando a concentração de substâncias como açúcares.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Polarimeter_instrument.png/400px-Polarimeter_instrument.png" },
+          { "name": "Potássio", "description": "Elemento químico metálico (K), essencial para o funcionamento celular e encontrado em compostos como sais de potássio.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Potassium_in_periodic_table.png/400px-Potassium_in_periodic_table.png" },
+          { "name": "Precipitação", "description": "Reação química que resulta na formação de um sólido insolúvel (precipitado) a partir de soluções líquidas.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Precipitation_in_chemistry.svg/400px-Precipitation_in_chemistry.svg.png" },
+          { "name": "Precipitado", "description": "Sólido formado em uma reação de precipitação, geralmente como resultado da combinação de dois reagentes em solução.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Precipitate.png/400px-Precipitate.png" },
+          { "name": "Pressão", "description": "Força exercida por uma substância sobre uma área, frequentemente medida em atmosferas ou pascal.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Pressure.svg/400px-Pressure.svg.png" },
+          { "name": "Propanona", "description": "Composto orgânico (também conhecido como acetona), utilizado como solvente e em processos químicos.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Acetone.svg/400px-Acetone.svg.png" },
+          { "name": "Prótons", "description": "Partículas subatômicas com carga positiva encontradas no núcleo dos átomos, essenciais para determinar o número atômico de um elemento.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Proton.svg/400px-Proton.svg.png" },
+          { "name": "Pureza", "description": "Medida da quantidade de substância pura presente em uma amostra, em relação a outras impurezas.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Purity_symbol.svg/400px-Purity_symbol.svg.png" },
+          { "name": "Pureza", "description": "Grau de ausência de impurezas ou substâncias indesejáveis em uma amostra.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Purity_symbol.svg/400px-Purity_symbol.svg.png" },
+          { "name": "Purificação", "description": "Processo de remoção de impurezas ou substâncias indesejadas de uma amostra, visando obter um produto mais puro.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Purification_water.svg/400px-Purification_water.svg.png" },
+          { "name": "Reação", "description": "Processo químico no qual substâncias reagem para formar novos compostos, geralmente com a troca de elétrons ou átomos.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Chemical_reaction.svg/400px-Chemical_reaction.svg.png" },
+          { "name": "Reagente", "description": "Substância química utilizada em experimentos para iniciar ou provocar uma reação química.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Reagents.svg/400px-Reagents.svg.png" },
+          { "name": "Reagentes", "description": "Substâncias químicas empregadas em reações para gerar produtos desejados ou facilitar processos.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Reagents.svg/400px-Reagents.svg.png" },
+          { "name": "Recristalização", "description": "Processo utilizado para purificar substâncias sólidas, dissolvendo o material e depois recristalizando-o em uma forma mais pura.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Recrystallization.jpg/400px-Recrystallization.jpg" },
+          { "name": "Redução", "description": "Reação química em que um átomo ou molécula ganha elétrons, geralmente associada à perda de oxigênio ou aumento de hidrogênio.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Reduction_reaction.svg/400px-Reduction_reaction.svg.png" },
+          { "name": "Refração", "description": "Mudança na direção de propagação de uma onda (como luz) quando passa de um meio para outro, devido à diferença de velocidade.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Refraction_in_water.svg/400px-Refraction_in_water.svg.png" },
+
+          { "name": "Refratometria", "description": "Técnica analítica que mede o índice de refração de substâncias, utilizada para determinar a concentração de soluções.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Refractometer.jpg/400px-Refractometer.jpg" },
+          { "name": "Refratômetro", "description": "Instrumento usado para medir o índice de refração de líquidos e sólidos, essencial em análises de concentração de soluções.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Refractometer.jpg/400px-Refractometer.jpg" },
+          { "name": "Retículos", "description": "Estruturas ordenadas, como as camadas de átomos em cristais, que podem ser analisadas em cristalografia.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Crystal_structure_of_sodium_chloride.svg/400px-Crystal_structure_of_sodium_chloride.svg.png" },
+          { "name": "Reversibilidade", "description": "Propriedade de uma reação ou processo químico que pode ser invertido, resultando nos produtos originais.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Reversible_reaction_example.svg/400px-Reversible_reaction_example.svg.png" },
+          { "name": "Sacarímetros", "description": "Instrumentos utilizados para medir a concentração de sacarose em soluções, como em processos de fabricação de açúcar.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Saccharimeter.png/400px-Saccharimeter.png" },
+          { "name": "Sacarose", "description": "Tipo de açúcar comum, composto por glicose e frutose, amplamente utilizado como adoçante.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Sucrose-3D-vdW.png/400px-Sucrose-3D-vdW.png" },
+          { "name": "Sódio", "description": "Elemento químico (Na) essencial para a vida, presente em compostos como o sal de cozinha (NaCl).", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Sodium-3D-vdW.png/400px-Sodium-3D-vdW.png" },
+          { "name": "Sólido", "description": "Estado da matéria caracterizado pela forma fixa e volume constante, com partículas organizadas em uma estrutura sólida.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Solid_symbol.svg/400px-Solid_symbol.svg.png" },
+          { "name": "Solubilidade", "description": "Capacidade de uma substância se dissolver em um solvente, formando uma solução.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Solubility_in_water.svg/400px-Solubility_in_water.svg.png" },
+          { "name": "Solução", "description": "Mistura homogênea de duas ou mais substâncias, onde uma é dissolvida na outra, formando uma única fase.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Solution_in_water.svg/400px-Solution_in_water.svg.png" },
+          { "name": "Solutos", "description": "Substâncias dissolvidas em um solvente para formar uma solução.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Solution_in_water.svg/400px-Solution_in_water.svg.png" },
+          { "name": "Solvente", "description": "Substância que dissolve um soluto para formar uma solução.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Water_molecule.svg/400px-Water_molecule.svg.png" },
+          { "name": "Solvente", "description": "Substância capaz de dissolver um ou mais solutos, formando uma solução.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Water_molecule.svg/400px-Water_molecule.svg.png" },
+          { "name": "Sublimação", "description": "Processo em que uma substância passa diretamente do estado sólido para o estado gasoso, sem passar pelo estado líquido.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Sublimation_versus_melting.svg/400px-Sublimation_versus_melting.svg.png" },
+          { "name": "Substâncias", "description": "Matérias com composição química definida, que podem ser simples ou compostas por diferentes elementos.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Matter.svg/400px-Matter.svg.png" },
+          { "name": "Surfatantes", "description": "Substâncias que reduzem a tensão superficial de líquidos, facilitando a mistura de substâncias imiscíveis.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Surfactant_molecule.svg/400px-Surfactant_molecule.svg.png" },
+          { "name": "Suspensão", "description": "Mistura heterogênea na qual partículas sólidas estão dispersas em um líquido, mas não dissolvidas nele.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Suspension.jpg/400px-Suspension.jpg" },
+          { "name": "Temperatura", "description": "Medida da energia térmica de uma substância, que influencia as reações químicas e os estados da matéria.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Temperature_symbol.svg/400px-Temperature_symbol.svg.png" },
+          { "name": "Temperatura", "description": "Escala de medida que indica o grau de calor de um sistema, fundamental em processos químicos e físicos.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Temperature_symbol.svg/400px-Temperature_symbol.svg.png" },
+          { "name": "Teor", "description": "Quantidade de uma substância presente em uma mistura ou solução, geralmente expressa em porcentagem.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Percentage_symbol.svg/400px-Percentage_symbol.svg.png" },
+          { "name": "Termoquímica", "description": "Ramo da química que estuda as trocas de calor durante as reações químicas e as mudanças de estado.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Exothermic_reaction.svg/400px-Exothermic_reaction.svg.png" },
+          { "name": "Tioálcoois", "description": "Compostos orgânicos que contêm o grupo -SH ligado a um átomo de carbono, também conhecidos como mercaptanos.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Thiol_structure.svg/400px-Thiol_structure.svg.png" },
+          { "name": "Titulação", "description": "Método quantitativo de análise utilizado para determinar a concentração de uma solução, geralmente envolvendo uma reação de neutralização.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Titration.svg/400px-Titration.svg.png" },
+          { "name": "Titulante", "description": "Substância de concentração conhecida utilizada em titulação para reagir com a substância de concentração desconhecida.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Titration.svg/400px-Titration.svg.png" },
+          { "name": "Titulometria", "description": "Técnica analítica baseada na titulação, usada para determinar a concentração de uma solução por meio de uma reação com volume conhecido de titulante.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Titration.svg/400px-Titration.svg.png" },
+
+          { "name": "Tolueno", "description": "Composto orgânico aromático usado como solvente e na fabricação de produtos químicos como plásticos e resinas.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Toluene-structure.svg/400px-Toluene-structure.svg.png" },
+          { "name": "Tornassol", "description": "Corante utilizado em testes de pH, mudando de cor dependendo da acidez ou alcalinidade de uma solução.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Tornasol.svg/400px-Tornasol.svg.png" },
+          { "name": "Triálcool", "description": "Composto orgânico que contém três grupos hidroxila (-OH) em sua estrutura, como o glicerol.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Glycerol-3D-balls.png/400px-Glycerol-3D-balls.png" },
+          { "name": "Trimetilcarbinol", "description": "Álcool terciário composto por três grupos metil ligados a um átomo de carbono central, também conhecido como álcool isopropílico.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Isopropyl_alcohol_2D_structure.png/400px-Isopropyl_alcohol_2D_structure.png" },
+          { "name": "Trimetilcarbinol", "description": "Álcool terciário composto por três grupos metil ligados a um átomo de carbono central, comumente utilizado como solvente.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Isopropyl_alcohol_2D_structure.png/400px-Isopropyl_alcohol_2D_structure.png" },
+          { "name": "Trinitração", "description": "Processo químico utilizado na produção de compostos como a trinitrotolueno (TNT), envolvendo a adição de três grupos nitro (-NO2) a uma molécula.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/TNT_structure.png/400px-TNT_structure.png" },
+          { "name": "Troálcool", "description": "Composto orgânico onde um grupo hidroxila (-OH) é ligado a um átomo de carbono secundário ou terciário.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Isopropyl_alcohol_2D_structure.png/400px-Isopropyl_alcohol_2D_structure.png" },
+          { "name": "Tungstênio", "description": "Elemento químico (W) conhecido por sua alta densidade e ponto de fusão, usado principalmente em filamentos de lâmpadas e eletrônica.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Tungsten-3D-vdW.png/400px-Tungsten-3D-vdW.png" },
+          { "name": "Turbidimetria", "description": "Método analítico usado para medir a turbidez de uma solução, com base na dispersão da luz por partículas suspensas.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Turbidimeter_instruments.png/400px-Turbidimeter_instruments.png" },
+          { "name": "Turvação", "description": "Propriedade de uma solução que apresenta partículas em suspensão, causando dispersão da luz e dificultando a visão clara através dela.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Turbidity_in_water.jpg/400px-Turbidity_in_water.jpg" },
+          { "name": "Ultracongelamento", "description": "Processo de resfriamento rápido, utilizado para conservar alimentos e materiais biológicos a temperaturas muito baixas.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Freezer_2007-11-06.jpg/400px-Freezer_2007-11-06.jpg" },
+          { "name": "Uréia", "description": "Composto orgânico, rico em nitrogênio, usado como fertilizante e na produção de plásticos e resinas.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Urea-2D-skeletal.png/400px-Urea-2D-skeletal.png" },
+          { "name": "Vanádio", "description": "Elemento químico (V) utilizado em ligas metálicas e catalisadores devido à sua resistência à corrosão.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Vanadium-3D-vdW.png/400px-Vanadium-3D-vdW.png" },
+          { "name": "Variabilidade", "description": "Diferença ou dispersão de resultados em uma série de dados, importante para a análise estatística e experimental.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Standard_deviation_diagram.svg/400px-Standard_deviation_diagram.svg.png" },
+          { "name": "Vazamento", "description": "Perda de substâncias de um sistema fechado devido a falhas em vedação ou estrutura.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Leakage.jpg/400px-Leakage.jpg" },
+          { "name": "Vedação", "description": "Processo ou técnica utilizada para impedir o vazamento de substâncias, utilizando materiais que fecham as aberturas de sistemas.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Sealant.jpg/400px-Sealant.jpg" },
+          { "name": "Viragem", "description": "Alteração no pH de uma solução, geralmente associada ao ponto de viragem em uma titulação.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Titration_indicators.png/400px-Titration_indicators.png" },
+          { "name": "Volatilização", "description": "Processo no qual uma substância passa do estado líquido ou sólido para o estado gasoso, geralmente sob influência de temperatura ou pressão.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Evaporation_of_water_animation.gif/400px-Evaporation_of_water_animation.gif" },
+          { "name": "Volume", "description": "Espaço ocupado por uma substância ou objeto, geralmente medido em litros ou metros cúbicos.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Volume_symbol.svg/400px-Volume_symbol.svg.png" },
+          { "name": "Xenônio", "description": "Elemento químico (Xe) nobre e raro, utilizado principalmente em lâmpadas de alta intensidade e lasers.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Xenon-3D-vdW.png/400px-Xenon-3D-vdW.png" }
+          ];
+  
+          
+          function removeAccents(str) {
+            return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+          }
+
+          function search() {
+              const query = document.getElementById('searchInput').value.toLowerCase();
+              const resultsContainer = document.getElementById('results');
+              resultsContainer.innerHTML = ''; 
+  
+              if (query) {
+                  const results = searchData.filter(item => 
+                    removeAccents(item.name.toLowerCase()).includes(removeAccents(query)));
+                  const nao = document.getElementById("nao");
+  
+                  if (results.length > 0) {
+
+                      nao.style.display = "none";
+
+                      results.forEach(item => {
+                          const card = document.createElement('div');
+                          card.classList.add('card');
+                          
+                          const cardBody = document.createElement('div');
+                          cardBody.classList.add('card-body');
+  
+                          const title = document.createElement('h5');
+                          title.classList.add('card-title');
+                          title.textContent = item.name;
+  
+                          const text = document.createElement('p');
+                          text.classList.add('card-text');
+                          text.textContent = item.description;
+  
+                          cardBody.appendChild(title);
+                          cardBody.appendChild(text);
+  
+                          card.appendChild(cardBody);
+  
+                          resultsContainer.appendChild(card);
+                      });
+                  } else {
+                      nao.style.display = "flex";
+                  }
+              } else {
+                  nao.style.display = "none";
+                  searchData.forEach(item => {
+                      const card = document.createElement('div');
+                      card.classList.add('card');
+  
+                      const cardBody = document.createElement('div');
+                      cardBody.classList.add('card-body');
+  
+                      const title = document.createElement('h5');
+                      title.classList.add('card-title');
+                      title.textContent = item.name;
+  
+                      const text = document.createElement('p');
+                      text.classList.add('card-text');
+                      text.textContent = item.description;
+  
+                      cardBody.appendChild(title);
+                      cardBody.appendChild(text);
+  
+                      card.appendChild(cardBody);
+  
+                      resultsContainer.appendChild(card);
+                  });
+              }
+          }
+  
+          search();
+      </script>
+
+    <footer>
+        <img src="https://bkpsitecpsnew.blob.core.windows.net/uploadsitecps/sites/1/2022/10/centro-paula-souza-logo.svg" class="fimg">
+        <img src="imgs/EtC.png" class="fimg" style="width: 200px;">
+    </footer>
+</body>
+</html>
